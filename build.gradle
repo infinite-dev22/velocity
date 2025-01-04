@@ -1,5 +1,8 @@
 plugins {
     id 'java'
+    id "org.javamodularity.moduleplugin" version "$module_plugin"
+    id "application"
+    id "org.graalvm.buildtools.native" version "$native_build_tool_plugin"
 }
 
 group = 'inc.nomard'
@@ -7,6 +10,55 @@ version = '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
+}
+
+//graalvmNative {
+//    binaries.all {
+//        resources.autodetect()
+//        buildArgs.add("-O4")
+//        buildArgs.add("--initialize-at-build-time=org.apache.logging.log4j.*")
+//        buildArgs.add("--initialize-at-build-time=org.apache.logging.log4j,org.apache.logging.log4j.core")
+//    }
+//    toolchainDetection = true
+//    agent {
+//        defaultMode = "standard"
+//        enabled = true
+//        modes {
+//            standard {
+//            }
+//        }
+//        builtinCallerFilter = true
+//        builtinHeuristicFilter = true
+//        enableExperimentalPredefinedClasses = false
+//        enableExperimentalUnsafeAllocationTracing = false
+//        trackReflectionMetadata = true
+//        metadataCopy {
+//            inputTaskNames.add("test")
+//            outputDirectories.add("src/main/resources/META-INF/native-image/<groupId>/<artifactId>/")
+//            mergeWithExisting = true
+//        }
+//    }
+//    binaries {
+//        main {
+//            imageName = "OpenSale-ERP"
+//            mainClass = "inc.nomard.spoty.core.Main"
+//            debug = true
+//            verbose = true
+//            fallback = false
+//            sharedLibrary = false
+//            quickBuild = false
+//            richOutput = false
+//        }
+//    }
+//    binaries.configureEach {
+//        buildArgs.add("--verbose")
+//        resources.autodetect()
+//    }
+//}
+
+application {
+    mainModule = "velo"
+    mainClass = "inc.nomard.velo.Main"
 }
 
 dependencies {
