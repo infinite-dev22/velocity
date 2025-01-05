@@ -29,8 +29,8 @@ graalvmNative {
     }
     binaries {
         main {
-            imageName = "velo"
-            mainClass = "inc.nomard.velo.cli.VeloCli"
+            imageName = "velocity"
+            mainClass = "inc.nomard.velocity.cli.VeloCli"
             debug = true
             verbose = true
             fallback = false
@@ -55,8 +55,8 @@ graalvmNative {
 }
 
 application {
-    mainModule = "velo"
-    mainClass = "inc.nomard.velo.cli.VeloCli"
+    mainModule = "velocity"
+    mainClass = "inc.nomard.velocity.cli.VeloCli"
 }
 
 dependencies {
