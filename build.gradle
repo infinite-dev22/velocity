@@ -13,9 +13,6 @@ repositories {
 }
 
 graalvmNative {
-    binaries.configureEach {
-        resources.autodetect()
-    }
     toolchainDetection = true
     agent {
         defaultMode = "standard"
@@ -29,39 +26,45 @@ graalvmNative {
         enableExperimentalPredefinedClasses = false
         enableExperimentalUnsafeAllocationTracing = false
         trackReflectionMetadata = true
-        metadataCopy {
-            inputTaskNames.add("test")
-            outputDirectories.add("src/main/resources/META-INF/native-image/<groupId>/<artifactId>/")
-            mergeWithExisting = true
-        }
     }
     binaries {
         main {
-            imageName = "VeloCraft"
-            mainClass = "inc.nomard.velo.Main"
+            imageName = "velo"
+            mainClass = "inc.nomard.velo.cli.VeloCli"
             debug = true
             verbose = true
             fallback = false
             sharedLibrary = false
             quickBuild = false
             richOutput = false
+            buildArgs.add("-O4")
+            buildArgs.add('-H:+UnlockExperimentalVMOptions')
+            buildArgs.add('-H:+RemoveSaturatedTypeFlows')
+//            buildArgs.add('-H:+RemoveDeadNodes')
+            buildArgs.add('-H:-ReportExceptionStackTraces')
+            // buildArgs.add('--link-at-build-time')
+            runtimeArgs.add('--help')
         }
     }
     binaries.configureEach {
-        buildArgs.add("--verbose")
         resources.autodetect()
+        buildArgs.add("--verbose")
+        buildArgs.add("-H:IncludeResources=\"picocli*.json\"")
+        buildArgs.add("-H:+ReportExceptionStackTraces")
     }
 }
 
 application {
     mainModule = "velo"
-    mainClass = "inc.nomard.velo.Main"
+    mainClass = "inc.nomard.velo.cli.VeloCli"
 }
 
 dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.18.2'
     implementation 'info.picocli:picocli:4.7.6'
     implementation 'org.eclipse.jgit:org.eclipse.jgit:7.1.0.202411261347-r'
+
+    annotationProcessor 'info.picocli:picocli-codegen:4.7.6'
 
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
