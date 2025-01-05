@@ -1,4 +1,4 @@
-package inc.nomard.velo.exception;
+package inc.nomard.velocity.exception;
 
 public enum ErrorCode {
     TEMPLATE_NOT_FOUND(1001),

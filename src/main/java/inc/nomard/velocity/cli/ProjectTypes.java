@@ -1,6 +1,6 @@
-package inc.nomard.velo.cli;
+package inc.nomard.velocity.cli;
 
-import inc.nomard.velo.model.ProjectType;
+import inc.nomard.velocity.model.ProjectType;
 
 import java.util.ArrayList;
 import java.util.List;

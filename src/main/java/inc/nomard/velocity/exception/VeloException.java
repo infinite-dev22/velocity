@@ -1,4 +1,4 @@
-package inc.nomard.velo.exception;
+package inc.nomard.velocity.exception;
 
 public class VeloException extends RuntimeException {
     private final ErrorCode code;

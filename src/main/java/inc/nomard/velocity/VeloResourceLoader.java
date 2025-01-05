@@ -1,4 +1,4 @@
-package inc.nomard.velo;
+package inc.nomard.velocity;
 
 import java.net.URL;
 

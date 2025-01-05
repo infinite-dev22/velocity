@@ -1,12 +1,12 @@
-package inc.nomard.velo.templating;
+package inc.nomard.velocity.templating;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import inc.nomard.velo.VeloResourceLoader;
-import inc.nomard.velo.exception.ErrorCode;
-import inc.nomard.velo.exception.VeloException;
-import inc.nomard.velo.model.ProjectType;
+import inc.nomard.velocity.VeloResourceLoader;
+import inc.nomard.velocity.exception.ErrorCode;
+import inc.nomard.velocity.exception.VeloException;
+import inc.nomard.velocity.model.ProjectType;
 
 import java.io.IOException;
 import java.net.URISyntaxException;

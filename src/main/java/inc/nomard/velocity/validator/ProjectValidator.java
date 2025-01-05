@@ -1,9 +1,9 @@
-package inc.nomard.velo.validator;
+package inc.nomard.velocity.validator;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import inc.nomard.velo.exception.ErrorCode;
-import inc.nomard.velo.exception.VeloException;
-import inc.nomard.velo.model.ProjectType;
+import inc.nomard.velocity.exception.ErrorCode;
+import inc.nomard.velocity.exception.VeloException;
+import inc.nomard.velocity.model.ProjectType;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
