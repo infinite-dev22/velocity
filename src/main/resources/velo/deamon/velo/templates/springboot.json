@@ -1,0 +1,53 @@
+{
+  "name": "Spring Boot Template",
+  "version": "1.0.0",
+  "description": "Feature-based Spring Boot application template",
+  "structure": {
+    "src": {
+      "main": {
+        "java/${basePackagePath}": {
+          "Application.java": "package ${basePackage};\n\nimport org.springframework.boot.SpringApplication;\nimport org.springframework.boot.autoconfigure.SpringBootApplication;\n\n@SpringBootApplication\npublic class Application {\n    public static void main(String[] args) {\n        SpringApplication.run(Application.class, args);\n    }\n}",
+          "features": {
+            ".gitkeep": ""
+          },
+          "shared": {
+            "config": {
+              "AppConfig.java": "package ${basePackage}.shared.config;\n\nimport org.springframework.context.annotation.Configuration;\n\n@Configuration\npublic class AppConfig {\n    // Global configuration\n}",
+              "WebSecurityConfig.java": "package ${basePackage}.shared.config;\n\nimport org.springframework.context.annotation.Configuration;\nimport org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;\n\n@Configuration\n@EnableWebSecurity\npublic class WebSecurityConfig {\n    // Security configuration\n}"
+            },
+            "exception": {
+              "GlobalExceptionHandler.java": "package ${basePackage}.shared.exception;\n\nimport org.springframework.web.bind.annotation.ControllerAdvice;\n\n@ControllerAdvice\npublic class GlobalExceptionHandler {\n    // Global exception handling\n}"
+            },
+            "utils": {
+              "DateUtils.java": "package ${basePackage}.shared.utils;\n\npublic class DateUtils {\n    // Date utility methods\n}"
+            }
+          }
+        },
+        "resources": {
+          "application.yml": "spring:\n  application:\n    name: ${projectName}\n  profiles:\n    active: local\n\nserver:\n  port: 8080\n",
+          "application-local.yml": "spring:\n  datasource:\n    url: jdbc:h2:mem:localdb\n    driver-class-name: org.h2.Driver\n  jpa:\n    database-platform: org.hibernate.dialect.H2Dialect\n",
+          "application-dev.yml": "spring:\n  datasource:\n    url: jdbc:postgresql://localhost:5432/${projectName}\n    driver-class-name: org.postgresql.Driver\n",
+          "application-prod.yml": "spring:\n  datasource:\n    url: jdbc:postgresql://${projectName}-db:5432/${projectName}\n    driver-class-name: org.postgresql.Driver\n"
+        }
+      },
+      "test": {
+        "java/${basePackagePath}": {
+          "ApplicationTests.java": "package ${basePackage};\n\nimport org.junit.jupiter.api.Test;\nimport org.springframework.boot.test.context.SpringBootTest;\n\n@SpringBootTest\nclass ApplicationTests {\n    @Test\n    void contextLoads() {\n    }\n}"
+        },
+        "resources": {
+          "application-test.yml": "spring:\n  datasource:\n    url: jdbc:h2:mem:testdb\n    driver-class-name: org.h2.Driver\n"
+        }
+      }
+    },
+    "scripts": {
+      "build.sh": "#!/bin/bash\n./mvnw clean package",
+      "run.sh": "#!/bin/bash\n./mvnw spring-boot:run",
+      "test.sh": "#!/bin/bash\n./mvnw test"
+    },
+    "docs": {
+      "README.md": "# ${projectName}\n\n## Overview\nThis project follows a Feature-Based Architecture pattern.\n\n## Structure\n- `features/`: Contains feature modules\n- `shared/`: Contains shared components\n\n## Getting Started\n1. Build: `./scripts/build.sh`\n2. Run: `./scripts/run.sh`\n3. Test: `./scripts/test.sh`",
+      "API.md": "# API Documentation\n\n## Endpoints\n\n### Health Check\n- GET /actuator/health\n\n## Error Codes\n\n## Authentication\n"
+    },
+    "pom.xml": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\">\n    <modelVersion>4.0.0</modelVersion>\n\n    <groupId>${basePackage}</groupId>\n    <artifactId>${projectName}</artifactId>\n    <version>0.0.1-SNAPSHOT</version>\n\n    <parent>\n        <groupId>org.springframework.boot</groupId>\n        <artifactId>spring-boot-starter-parent</artifactId>\n        <version>3.2.0</version>\n    </parent>\n\n    <dependencies>\n        <dependency>\n            <groupId>org.springframework.boot</groupId>\n            <artifactId>spring-boot-starter-web</artifactId>\n        </dependency>\n        <dependency>\n            <groupId>org.springframework.boot</groupId>\n            <artifactId>spring-boot-starter-security</artifactId>\n        </dependency>\n        <dependency>\n            <groupId>org.springframework.boot</groupId>\n            <artifactId>spring-boot-starter-data-jpa</artifactId>\n        </dependency>\n        <dependency>\n            <groupId>org.springframework.boot</groupId>\n            <artifactId>spring-boot-starter-validation</artifactId>\n        </dependency>\n        <dependency>\n            <groupId>org.postgresql</groupId>\n            <artifactId>postgresql</artifactId>\n            <scope>runtime</scope>\n        </dependency>\n        <dependency>\n            <groupId>com.h2database</groupId>\n            <artifactId>h2</artifactId>\n            <scope>runtime</scope>\n        </dependency>\n        <dependency>\n            <groupId>org.springframework.boot</groupId>\n            <artifactId>spring-boot-starter-test</artifactId>\n            <scope>test</scope>\n        </dependency>\n    </dependencies>\n</project>"
+  }
+}
