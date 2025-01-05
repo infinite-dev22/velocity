@@ -1,0 +1,101 @@
+{
+  "springboot": {
+    "name": "Spring Boot Template",
+    "version": "1.0.0",
+    "description": "Feature-based Spring Boot application template",
+    "structure": {
+      "src": {
+        "main": {
+          "java/${basePackagePath}": {
+            "Application.java": "package ${basePackage};\n\nimport org.springframework.boot.SpringApplication;\nimport org.springframework.boot.autoconfigure.SpringBootApplication;\n\n@SpringBootApplication\npublic class Application {\n    public static void main(String[] args) {\n        SpringApplication.run(Application.class, args);\n    }\n}",
+            "features": {
+              ".gitkeep": ""
+            },
+            "shared": {
+              "config": {
+                "AppConfig.java": "package ${basePackage}.shared.config;\n\nimport org.springframework.context.annotation.Configuration;\n\n@Configuration\npublic class AppConfig {\n    // Global configuration\n}",
+                "WebSecurityConfig.java": "package ${basePackage}.shared.config;\n\nimport org.springframework.context.annotation.Configuration;\nimport org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;\n\n@Configuration\n@EnableWebSecurity\npublic class WebSecurityConfig {\n    // Security configuration\n}"
+              },
+              "exception": {
+                "GlobalExceptionHandler.java": "package ${basePackage}.shared.exception;\n\nimport org.springframework.web.bind.annotation.ControllerAdvice;\n\n@ControllerAdvice\npublic class GlobalExceptionHandler {\n    // Global exception handling\n}"
+              },
+              "utils": {
+                "DateUtils.java": "package ${basePackage}.shared.utils;\n\npublic class DateUtils {\n    // Date utility methods\n}"
+              }
+            }
+          },
+          "resources": {
+            "application.yml": "spring:\n  application:\n    name: ${projectName}\n  profiles:\n    active: local\n\nserver:\n  port: 8080\n",
+            "application-local.yml": "spring:\n  datasource:\n    url: jdbc:h2:mem:localdb\n    driver-class-name: org.h2.Driver\n  jpa:\n    database-platform: org.hibernate.dialect.H2Dialect\n",
+            "application-dev.yml": "spring:\n  datasource:\n    url: jdbc:postgresql://localhost:5432/${projectName}\n    driver-class-name: org.postgresql.Driver\n",
+            "application-prod.yml": "spring:\n  datasource:\n    url: jdbc:postgresql://${projectName}-db:5432/${projectName}\n    driver-class-name: org.postgresql.Driver\n"
+          }
+        },
+        "test": {
+          "java/${basePackagePath}": {
+            "ApplicationTests.java": "package ${basePackage};\n\nimport org.junit.jupiter.api.Test;\nimport org.springframework.boot.test.context.SpringBootTest;\n\n@SpringBootTest\nclass ApplicationTests {\n    @Test\n    void contextLoads() {\n    }\n}"
+          },
+          "resources": {
+            "application-test.yml": "spring:\n  datasource:\n    url: jdbc:h2:mem:testdb\n    driver-class-name: org.h2.Driver\n"
+          }
+        }
+      },
+      "scripts": {
+        "build.sh": "#!/bin/bash\n./mvnw clean package",
+        "run.sh": "#!/bin/bash\n./mvnw spring-boot:run",
+        "test.sh": "#!/bin/bash\n./mvnw test"
+      },
+      "docs": {
+        "README.md": "# ${projectName}\n\n## Overview\nThis project follows a Feature-Based Architecture pattern.\n\n## Structure\n- `features/`: Contains feature modules\n- `shared/`: Contains shared components\n\n## Getting Started\n1. Build: `./scripts/build.sh`\n2. Run: `./scripts/run.sh`\n3. Test: `./scripts/test.sh`",
+        "API.md": "# API Documentation\n\n## Endpoints\n\n### Health Check\n- GET /actuator/health\n\n## Error Codes\n\n## Authentication\n"
+      },
+      "pom.xml": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\">\n    <modelVersion>4.0.0</modelVersion>\n\n    <groupId>${basePackage}</groupId>\n    <artifactId>${projectName}</artifactId>\n    <version>0.0.1-SNAPSHOT</version>\n\n    <parent>\n        <groupId>org.springframework.boot</groupId>\n        <artifactId>spring-boot-starter-parent</artifactId>\n        <version>3.2.0</version>\n    </parent>\n\n    <dependencies>\n        <dependency>\n            <groupId>org.springframework.boot</groupId>\n            <artifactId>spring-boot-starter-web</artifactId>\n        </dependency>\n        <dependency>\n            <groupId>org.springframework.boot</groupId>\n            <artifactId>spring-boot-starter-security</artifactId>\n        </dependency>\n        <dependency>\n            <groupId>org.springframework.boot</groupId>\n            <artifactId>spring-boot-starter-data-jpa</artifactId>\n        </dependency>\n        <dependency>\n            <groupId>org.springframework.boot</groupId>\n            <artifactId>spring-boot-starter-validation</artifactId>\n        </dependency>\n        <dependency>\n            <groupId>org.postgresql</groupId>\n            <artifactId>postgresql</artifactId>\n            <scope>runtime</scope>\n        </dependency>\n        <dependency>\n            <groupId>com.h2database</groupId>\n            <artifactId>h2</artifactId>\n            <scope>runtime</scope>\n        </dependency>\n        <dependency>\n            <groupId>org.springframework.boot</groupId>\n            <artifactId>spring-boot-starter-test</artifactId>\n            <scope>test</scope>\n        </dependency>\n    </dependencies>\n</project>"
+    }
+  },
+  "react": {
+    "name": "React Template",
+    "version": "1.0.0",
+    "description": "Feature-based React application template",
+    "structure": {
+      "src": {
+        "features": {
+          ".gitkeep": ""
+        },
+        "shared": {
+          "components": {
+            "Button.tsx": "import React from 'react';\n\ninterface ButtonProps {\n  children: React.ReactNode;\n  onClick?: () => void;\n  variant?: 'primary' | 'secondary';\n}\n\nexport const Button: React.FC<ButtonProps> = ({ children, onClick, variant = 'primary' }) => {\n  return (\n    <button\n      onClick={onClick}\n      className={`px-4 py-2 rounded ${variant === 'primary' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-800'}`}\n    >\n      {children}\n    </button>\n  );\n};",
+            "Card.tsx": "import React from 'react';\n\ninterface CardProps {\n  children: React.ReactNode;\n  title?: string;\n}\n\nexport const Card: React.FC<CardProps> = ({ children, title }) => {\n  return (\n    <div className=\"p-4 border rounded shadow-sm\">\n      {title && <h3 className=\"text-lg font-semibold mb-2\">{title}</h3>}\n      {children}\n    </div>\n  );\n};"
+          },
+          "hooks": {
+            "useApi.ts": "import { useState, useEffect } from 'react';\n\ninterface UseApiOptions {\n  url: string;\n  method?: 'GET' | 'POST' | 'PUT' | 'DELETE';\n  body?: any;\n}\n\nexport const useApi = <T>({ url, method = 'GET', body }: UseApiOptions) => {\n  const [data, setData] = useState<T | null>(null);\n  const [loading, setLoading] = useState(true);\n  const [error, setError] = useState<Error | null>(null);\n\n  useEffect(() => {\n    const fetchData = async () => {\n      try {\n        const response = await fetch(url, {\n          method,\n          headers: {\n            'Content-Type': 'application/json',\n          },\n          body: body ? JSON.stringify(body) : undefined,\n        });\n        const json = await response.json();\n        setData(json);\n      } catch (err) {\n        setError(err instanceof Error ? err : new Error('An error occurred'));\n      } finally {\n        setLoading(false);\n      }\n    };\n\n    fetchData();\n  }, [url, method, body]);\n\n  return { data, loading, error };\n};"
+          },
+          "utils": {
+            "date.ts": "export const formatDate = (date: Date): string => {\n  return new Intl.DateTimeFormat('en-US').format(date);\n};",
+            "validation.ts": "export const validateEmail = (email: string): boolean => {\n  return /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email);\n};"
+          },
+          "contexts": {
+            "AuthContext.tsx": "import React, { createContext, useContext, useState } from 'react';\n\ninterface AuthContextType {\n  user: any | null;\n  login: (credentials: { email: string; password: string }) => Promise<void>;\n  logout: () => void;\n}\n\nconst AuthContext = createContext<AuthContextType | null>(null);\n\nexport const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {\n  const [user, setUser] = useState<any | null>(null);\n\n  const login = async (credentials: { email: string; password: string }) => {\n    // Implement login logic\n  };\n\n  const logout = () => {\n    setUser(null);\n  };\n\n  return (\n    <AuthContext.Provider value={{ user, login, logout }}>\n      {children}\n    </AuthContext.Provider>\n  );\n};\n\nexport const useAuth = () => {\n  const context = useContext(AuthContext);\n  if (!context) {\n    throw new Error('useAuth must be used within an AuthProvider');\n  }\n  return context;\n};"
+          }
+        },
+        "App.tsx": "import React from 'react';\nimport { AuthProvider } from './shared/contexts/AuthContext';\n\nfunction App() {\n  return (\n    <AuthProvider>\n      <div className=\"min-h-screen bg-gray-100\">\n        <header className=\"bg-white shadow\">\n          <div className=\"max-w-7xl mx-auto py-6 px-4\">\n            <h1 className=\"text-3xl font-bold text-gray-900\">${projectName}</h1>\n          </div>\n        </header>\n        <main className=\"max-w-7xl mx-auto py-6 px-4\">\n          {/* Features will be mounted here */}\n        </main>\n      </div>\n    </AuthProvider>\n  );\n}",
+        "index.tsx": "import React from 'react';\nimport ReactDOM from 'react-dom/client';\nimport App from './App';\nimport './index.css';\n\nReactDOM.createRoot(document.getElementById('root')!).render(\n  <React.StrictMode>\n    <App />\n  </React.StrictMode>\n);"
+      },
+      "public": {
+        "index.html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>${projectName}</title>\n</head>\n<body>\n    <div id=\"root\"></div>\n</body>\n</html>",
+        "robots.txt": "User-agent: *\nAllow: /",
+        "favicon.ico": ""
+      },
+      "tests": {
+        "setup.ts": "import '@testing-library/jest-dom';\n",
+        "App.test.tsx": "import { render, screen } from '@testing-library/react';\nimport App from '../src/App';\n\ntest('renders app header', () => {\n  render(<App />);\n  const headerElement = screen.getByText(/${projectName}/i);\n  expect(headerElement).toBeInTheDocument();\n});"
+      },
+      "scripts": {
+        "setup.sh": "#!/bin/bash\nnpm install",
+        "dev.sh": "#!/bin/bash\nnpm run dev",
+        "build.sh": "#!/bin/bash\nnpm run build",
+        "test.sh": "#!/bin/bash\nnpm test"
+      },
+      "docs": {
+        "README.md": "# ${projectName}\n\n## Overview\nThis project follows a Feature-Based Architecture pattern using React and TypeScript.\n\n## Structure\n- `features/`: Contains feature modules\n- `shared/`: Contains shared components, hooks, and utilities\n\n## Getting Started\n1. Setup: `./scripts/setup.sh`\n2. Development: `./scripts/dev.sh`\n3. Build: `./scripts/build.sh`\n4. Test: `./scripts/test.sh`",
+        "ARCHITECTURE.md": "# Architecture\n\n## Feature-Based Structure\nEach feature is a self-contained module with its own:\n- Components\n- Hooks\n- Context (if needed)\n- Utils\n- Tests\n\n## Shared Module\n- Reusable components\n- Common hooks\n- Utility functions\n- Global context\n\n## Testing Strategy\n- Unit tests with Jest\n- Integration tests with Testing Library\n- E2E tests with Cypress"
+      },
